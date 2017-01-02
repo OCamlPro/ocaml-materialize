@@ -1,12 +1,11 @@
-open Tyxml_js.Html5
-
-val add_class : 'a elt -> string -> unit
-
-val load_materialize :
-  ?css:string ->
-  ?js:string ->
-  ?jquery:string ->
-  unit ->
-  unit
-
-val get_data : 'a elt option -> 'a elt list
+module Js_utils : module type of Js_utils
+module Base : module type of Base
+module Color : module type of Color
+module Button : module type of Button
+module Icons : module type of Icons
+module Shadow : module type of Shadow
+module Card : module type of Card
+module Media : module type of Media
+module Table : module type of Table
+module Grid : module type of Grid
+module Navbar : module type of Navbar

@@ -4,21 +4,33 @@ type button = Large | Normal | Flat
 type effect = No_effect | Waves | Teal | Light
 type direction = Horizontal | Vertical
 
-let button_to_str = function
-  | Large -> "btn-large"
-  | Normal -> "btn"
-  | Flat -> "btn-flat"
+val button_to_str : button -> string
+val effect_to_str : effect -> string
+val direction_to_str : direction -> string
 
-let effect_to_str = function
-  | No_effect -> ""
-  | Waves -> "waves-effect"
-  | Teal -> "waves-effect waves-teal"
-  | Light -> "waves-effect waves-light"
+val create_button :
+  ?ty:button ->
+  ?effects:effect list ->
+  url:uri ->
+  data:'a elt list ->
+  unit ->
+  [> 'a Html_types.a ] elt
 
-let direction_to_str = function
-  | Horizontal -> "horizontal"
-  | Vertical -> "vertical"
+val create_action :
+  ?data:[< Html_types.li_content_fun ] elt ->
+  ?color:Color.t ->
+  unit ->
+  [> Html_types.li ] elt
 
+val create_float_button :
+  ?ty:button ->
+  ?direction:direction ->
+  ?color:Color.t ->
+  data:Html_types.a_content_fun elt list ->
+  [< Html_types.ul_content_fun ] elt list ->
+  [> Html_types.div ] elt
+
+(*
 let create_button ?(ty=Normal) ?(effects=[Light]) ~url ~data () =
   let ty = button_to_str ty in
   let cl = String.concat " " (List.map effect_to_str effects) in
@@ -44,3 +56,4 @@ let create_float_button
   | Some color -> Color.background_color btn color
   end ;
   div ~a:[ a_class [ "fixed-action-btn" ; direction ] ] [ btn; ul actions ]
+*)

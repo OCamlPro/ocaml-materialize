@@ -1,0 +1,20 @@
+opam-version: "1.2"
+name:         "materialize"
+maintainer:   "OCamlPro"
+author:       "OCamlPro"
+
+homepage:     "https://www.tezos.com"
+bug-reports:  "https://github.com/tezos/ocaml-materialize/issues"
+dev-repo:     "https://github.com/tezos/ocaml-materialize"
+
+license:      ""
+version:      "dev"
+
+build: [make "all"]
+install: [make "install"]
+remove: [make "uninstall"]
+
+depends: [
+  "js_of_ocaml"
+]
+available: [ ocaml-version >= "4.02.0" ]
