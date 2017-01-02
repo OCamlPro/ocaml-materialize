@@ -10,8 +10,7 @@ IMPLS := \
   media.ml \
   table.ml \
   grid.ml \
-  navbar.ml \
-  materialize.ml
+  navbar.ml
 
 INTFS := \
   js_utils.mli \
@@ -24,8 +23,10 @@ INTFS := \
   media.mli \
   table.mli \
   grid.mli \
-  navbar.mli \
-  materialize.mli
+  navbar.mli
+
+OBJ_INTFS := ${INTFS:.mli=.cmi}
+OBJ_IMPLS := ${IMPLS:.ml=.cmo}
 
 LIB = materialize
 
@@ -39,9 +40,17 @@ PACKAGES= \
 
 all: $(LIB).cma
 
-$(LIB).cma: $(INTFS) $(IMPLS)
-	ocamlfind ocamlc $(PACKAGES) \
-        $(INTFS) $(IMPLS) -a -o $(LIB).cma
+%.cmi: %.mli
+	ocamlfind ocamlc $(PACKAGES) -c $<
+
+%.cmo: %.ml
+	ocamlfind ocamlc $(PACKAGES) -c $<
+
+$(LIB).cmo: $(OBJ_INTFS) $(OBJ_IMPLS)
+	ocamlfind ocamlc $(PACKAGES) $(OBJ_IMPLS) -pack -o $@
+
+$(LIB).cma: $(LIB).cmo
+	ocamlfind ocamlc $(PACKAGES) $< -a -o $@
 
 install: $(LIB).cma
 	ocamlfind install $(LIB) META $(LIB).cma $(LIB).cmi

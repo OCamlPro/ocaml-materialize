@@ -1,3 +1,5 @@
 version = "dev"
+requires = "js_of_ocaml js_of_ocaml.weak js_of_ocaml.tyxml tyxml"
 description = "MaterializeCSS OCaml library"
 archive(byte) = "materialize.cma"
+plugin(byte) = "materialize.cma"
