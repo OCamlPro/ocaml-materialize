@@ -29,31 +29,3 @@ val create_float_button :
   data:Html_types.a_content_fun elt list ->
   [< Html_types.ul_content_fun ] elt list ->
   [> Html_types.div ] elt
-
-(*
-let create_button ?(ty=Normal) ?(effects=[Light]) ~url ~data () =
-  let ty = button_to_str ty in
-  let cl = String.concat " " (List.map effect_to_str effects) in
-  a ~a:[a_href url; a_class [ cl; ty ]] data
-
-let create_action ?data ?color () =
-  let action =
-    li ~a:[ a_class [ "btn-floating" ] ] (Base.get_data data) in
-  begin match color with
-  | None -> ()
-  | Some color -> Color.background_color action color
-  end ;
-  action
-
-let create_float_button
-      ?(ty=Normal) ?(direction=Vertical) ?color ~data actions =
-  let ty = button_to_str ty in
-  let direction = direction_to_str direction in
-  let btn =
-    a ~a:[ a_class [ "btn-floating" ; ty ] ] data in
-  begin match color with
-  | None -> ()
-  | Some color -> Color.background_color btn color
-  end ;
-  div ~a:[ a_class [ "fixed-action-btn" ; direction ] ] [ btn; ul actions ]
-*)

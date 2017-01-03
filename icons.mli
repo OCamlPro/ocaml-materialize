@@ -17,10 +17,3 @@ val create_icon :
   ?position:position ->
   string ->
   [> Html_types.i ] elt
-
-(*
-let create_icon ?(size=Default) ?(position=None) name =
-  let size = size_to_str size in
-  let position = position_to_str position in
-  i ~a:[ a_class [ size ; "material-icons" ; position ] ] [ pcdata name ]
-*)
