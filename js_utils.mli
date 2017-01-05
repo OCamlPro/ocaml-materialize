@@ -58,6 +58,7 @@ module Manip : sig
 
   val children: 'a elt -> 'b elt list
   val by_id: string -> 'b elt option
+  val by_class: string -> 'a elt list
 
   val disable: 'a elt -> unit
   val enable: 'a elt -> unit

@@ -185,6 +185,12 @@ module Manip = struct
       ) in
     Js.Opt.to_option res
 
+  let by_class n =
+    let nodes =
+      Dom.list_of_nodeList @@
+      Dom_html.window##document##getElementsByClassName (Js.string n) in
+    List.map (fun node -> Of_dom.of_element node) nodes
+
   let childLength elt =
     let node = get_node elt in
     node##childNodes##length
