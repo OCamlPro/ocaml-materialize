@@ -4,7 +4,23 @@ type direction = Left | Right | Center
 
 val direction_to_string : direction -> string
 
-val create_item : ?id:string -> url:uri -> title:Html_types.a_content_fun elt list -> unit ->[> Html_types.li ] elt
+type nav_config = {
+  menu_width : int ;
+  edge : direction ;
+  close_on_click : bool ;
+  draggable : bool ;
+}
+
+val default_config : unit -> unit
+val configure : nav_config -> unit
+
+val create_item :
+  ?id:string ->
+  ?_class:string list ->
+  url:uri ->
+  title:Html_types.a_content_fun elt list ->
+  unit ->
+  [> Html_types.li ] elt
 
 val create_dropdown : id:string -> [< Html_types.ul_content_fun ] elt list -> string * [> Html_types.ul ] elt
 

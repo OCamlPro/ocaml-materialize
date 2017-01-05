@@ -7,10 +7,51 @@ let direction_to_string = function
   | Right -> "right"
   | Center -> "center"
 
-let create_item ?id ~url ~title () =
-  match id with
-  | None -> li [ a ~a:[ a_href url ] title ]
-  | Some id -> li [a ~a:[ a_id id; a_href url ] title ]
+type nav_config = {
+  menu_width : int ;
+  edge : direction ;
+  close_on_click : bool ;
+  draggable : bool ;
+}
+
+class type configuration = object
+  method menuWidth : int Js.prop
+  method edge : Js.js_string Js.t Js.prop
+  method closeOnClick : bool Js.t Js.prop
+  method draggable : bool Js.t Js.prop
+end
+
+class type sideNav = object
+  inherit [Dom.element] Dom.nodeList
+  method sideNav : configuration Js.t -> unit Js.t Js.meth
+end
+
+let default_config () =
+  let open Js in
+  let jquery = Unsafe.variable "$" in
+  let collapse =
+    Unsafe.fun_call jquery [| Unsafe.inject @@ Js.string ".button-collapse"|] in
+  collapse##sideNav (Unsafe.obj [||])
+
+let configure configuration =
+  let open Js in
+  let jquery = Unsafe.variable "$" in
+  let collapse =
+    Unsafe.fun_call jquery [| Unsafe.inject @@ Js.string ".button-collapse"|] in
+  let config : configuration Js.t = Unsafe.obj [||] in
+  config##menuWidth <- configuration.menu_width ;
+  config##edge <- Js.string (direction_to_string configuration.edge) ;
+  config##closeOnClick <- Js.bool configuration.close_on_click ;
+  config##draggable <- Js.bool configuration.draggable ;
+  collapse##sideNav (config)
+
+let create_item ?id ?_class ~url ~title () =
+  match id, _class with
+  | None, None -> li [ a ~a:[ a_href url ] title ]
+  | None, Some _class -> li [ a ~a:[ a_class _class; a_href url ] title ]
+  | Some id, None -> li [a ~a:[ a_id id; a_href url ] title ]
+  | Some id, Some _class ->
+    li [a ~a:[ a_id id; a_class _class; a_href url ] title ]
 
 let create_dropdown ~id menu =
   id, ul ~a:[ a_id id; a_class [ "dropdown-content" ]] menu
