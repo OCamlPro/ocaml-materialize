@@ -11,6 +11,8 @@ val direction_to_str : direction -> string
 val create_button :
   ?ty:button ->
   ?effects:effect list ->
+  ?id: string ->
+  ?_class:string list ->
   url:uri ->
   data:'a elt list ->
   unit ->

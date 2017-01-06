@@ -28,6 +28,7 @@ val create_navbar :
   title:[< Html_types.h1_content_fun ] elt list ->
   logo_url:uri ->
   logo:Html_types.a_content_fun elt list ->
+  ?id:string ->
   ?dropdown:string * [< Html_types.div_content_fun > `A `H1 `Ul ] elt ->
   ?contextual_menu:'a ->
   ?menu_direction:direction ->
