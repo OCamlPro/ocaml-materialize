@@ -66,13 +66,21 @@ let configure configuration =
   config##draggable <- Js.bool configuration.draggable ;
   collapse##sideNav (config)
 
-let create_item ?id ?_class ~url ~title () =
-  match id, _class with
-  | None, None -> li [ a ~a:[ a_href url ] title ]
-  | None, Some _class -> li [ a ~a:[ a_class _class; a_href url ] title ]
-  | Some id, None -> li [a ~a:[ a_id id; a_href url ] title ]
-  | Some id, Some _class ->
-    li [a ~a:[ a_id id; a_class _class; a_href url ] title ]
+let create_item ?id ?_class ?onclick ~url ~title () =
+  let attrs = [ a_href url ] in
+  let attrs =
+    match id with
+    | None -> attrs
+    | Some id -> a_id id :: attrs in
+  let attrs =
+    match _class with
+    | None -> attrs
+    | Some _class -> a_class _class :: attrs in
+  let attrs =
+    match onclick with
+    | None -> attrs
+    | Some onclick -> a_onclick onclick :: attrs in
+  li [ a ~a:attrs title ]
 
 let create_dropdown ~id menu =
   id, ul ~a:[ a_id id; a_class [ "dropdown-content" ]] menu
@@ -81,6 +89,7 @@ let create_navbar
     ~title
     ~logo_url
     ~logo
+    ~logo_txt
     ?id
     ?dropdown
     ?contextual_menu
@@ -118,17 +127,17 @@ let create_navbar
       [ Icons.create_icon "menu" ] in
   Js_utils.Manip.setAttribute menu_icon "data-activates" data_activates ;
   let desktop_menu =
-    ul ~a:[ a_class [ menu_direction ; "hide-on-med-and-down" ] ] menu in
+    ul ~a:[ a_class [ menu_direction ; "hide-on-med-and-down" ] ] (menu ()) in
   let mobile_logo =
     li
       [ div ~a:[ a_class [ "userView" ] ] [
-            img ~src:"../img/logo-white.png" ~alt:"Tezos" () ;
-            span ~a:[ a_class [ "white-text name" ] ] [ pcdata "Tezos" ]
+            logo ;
+            span ~a:[ a_class [ "white-text name" ] ] logo_txt
           ] ] in
   let mobile_menu =
     ul
       ~a:[ a_id data_activates; a_class [ "side-nav" ] ]
-      (mobile_logo :: (List.map (Js_utils.Manip.clone ~deep:true) menu)) in
+      (mobile_logo :: menu ()) in
   let id =
     match id with
     | None -> "default-navbar"
