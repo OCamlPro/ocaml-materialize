@@ -4,8 +4,8 @@ maintainer:   "OCamlPro"
 author:       "OCamlPro"
 
 homepage:     "https://www.tezos.com"
-bug-reports:  "https://github.com/tezos/ocaml-materialize/issues"
-dev-repo:     "https://github.com/tezos/ocaml-materialize"
+bug-reports:  "https://github.com/OCamlPro/ocaml-materialize/issues"
+dev-repo:     "https://github.com/OCamlPro/ocaml-materialize"
 
 license:      ""
 version:      "dev"
