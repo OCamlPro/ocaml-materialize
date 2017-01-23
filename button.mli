@@ -13,6 +13,7 @@ val create_button :
   ?effects:effect list ->
   ?id: string ->
   ?_class:string list ->
+  ?onclick:Xml.mouse_event_handler ->
   url:uri ->
   data:'a elt list ->
   unit ->

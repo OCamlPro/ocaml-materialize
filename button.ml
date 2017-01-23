@@ -19,12 +19,19 @@ let direction_to_str = function
   | Horizontal -> "horizontal"
   | Vertical -> "vertical"
 
-let create_button ?(ty=Normal) ?(effects=[Light]) ?id ?(_class=[]) ~url ~data () =
+let create_button
+    ?(ty=Normal) ?(effects=[Light]) ?id ?(_class=[]) ?onclick ~url ~data () =
   let ty = button_to_str ty in
   let cl = String.concat " " (List.map effect_to_str effects) in
-  match id with
-  | None -> a ~a:[a_href url; a_class ([ cl; ty ] @ _class) ] data
-  | Some id -> a ~a:[a_id id; a_href url; a_class ([ cl; ty ] @ _class) ] data
+  let attrs =
+    match id with
+    | None -> [a_href url; a_class ([ cl; ty ] @ _class) ]
+    | Some id -> [a_id id; a_href url; a_class ([ cl; ty ] @ _class) ] in
+  let attrs =
+    match onclick with
+    | None -> attrs
+    | Some action -> a_onclick action :: attrs in
+    a ~a:attrs data
 
 let create_action ?data ?color () =
   let action =
